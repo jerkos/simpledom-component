@@ -42,6 +42,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "simpledom-component~withgracefulunmount",
+    "function/index.html#static-function-withGracefulUnmount",
+    "<span>withGracefulUnmount</span> <span class=\"search-result-import-path\">simpledom-component</span>",
+    "function"
+  ],
+  [
     "builtinexternal/ecmascriptexternal.js~array",
     "external/index.html",
     "BuiltinExternal/ECMAScriptExternal.js~Array",
@@ -478,6 +484,12 @@ window.esdocSearchIndex = [
     "class/src/Component.js~Component.html#instance-member-store",
     "src/Component.js~Component#store",
     "member"
+  ],
+  [
+    "src/reactwrapper.js",
+    "file/src/ReactWrapper.js.html",
+    "src/ReactWrapper.js",
+    "file"
   ],
   [
     "src/store.js",

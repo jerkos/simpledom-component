@@ -34,6 +34,7 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Component.js~Component.html">Component</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Store.js~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withGracefulUnmount">withGracefulUnmount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-predicate">predicate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-el">el</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-renderTo">renderTo</a></span></span></li>
@@ -47,6 +48,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { convertToNode } from &apos;./converter&apos;;
 import { flatten, dasherize, isFunction } from &apos;./util&apos;;
 import { Store } from &apos;./Store&apos;;
+import * as ReactDOM from &quot;react-dom&quot;;
 
 
 /**
@@ -67,6 +69,14 @@ export function el(element, attrs, ...children) {
             componentClass: element,
             props
         };
+    } else if (element &amp;&amp; element.prototype &amp;&amp; element.prototype.__proto__.isReactComponent) {
+        return {
+            isReactComponent: true,
+            componentClass: element,
+            attrs,
+            children
+        }
+
     } else {
         if (isFunction(element)) {
             return element(attrs, ...children);
@@ -99,7 +109,8 @@ function cleanAnGetNode(node) {
  * @param {Store} store the store
  */
 export function renderToDom(node, component, store = new Store()) {
-
+    const event = new Event(&apos;beforerender&apos;);
+    window.dispatchEvent(event);
     renderComponents(node, [component], store);
 }
 

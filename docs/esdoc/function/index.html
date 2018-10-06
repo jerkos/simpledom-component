@@ -34,6 +34,7 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Component.js~Component.html">Component</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Store.js~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withGracefulUnmount">withGracefulUnmount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-predicate">predicate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-el">el</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-renderTo">renderTo</a></span></span></li>
@@ -186,6 +187,31 @@
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-withGracefulUnmount">withGracefulUnmount</a></span></span><span data-ice="signature">(WrappedComponent: <span>*</span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 </div>
@@ -202,11 +228,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber14">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {el} from &apos;<span><a href="file/src/renderer.js.html#lineNumber13">simpledom-component</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {el} from &apos;<span><a href="file/src/renderer.js.html#lineNumber14">simpledom-component</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>JSX factory function to create an object representing a dom node. Designed to be used with a JSX transpiler.</p>
@@ -376,11 +402,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber139">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber149">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {renderTo} from &apos;<span><a href="file/src/renderer.js.html#lineNumber139">simpledom-component</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {renderTo} from &apos;<span><a href="file/src/renderer.js.html#lineNumber149">simpledom-component</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Render some elements into a node.</p>
@@ -441,11 +467,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber55">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber64">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {renderToDom} from &apos;<span><a href="file/src/renderer.js.html#lineNumber55">simpledom-component</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {renderToDom} from &apos;<span><a href="file/src/renderer.js.html#lineNumber64">simpledom-component</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Render a component to the dom.</p>
@@ -513,11 +539,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber105">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/renderer.js.html#lineNumber115">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {renderToString} from &apos;<span><a href="file/src/renderer.js.html#lineNumber105">simpledom-component</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {renderToString} from &apos;<span><a href="file/src/renderer.js.html#lineNumber115">simpledom-component</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Render some elements into a string.</p>
@@ -552,6 +578,72 @@
         <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
         <td class="return-desc" data-ice="returnDescription"><p>html as a string.</p>
 </td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-withGracefulUnmount">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">withGracefulUnmount</span><span data-ice="signature">(WrappedComponent: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/ReactWrapper.js.html#lineNumber6">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {withGracefulUnmount} from &apos;<span><a href="file/src/ReactWrapper.js.html#lineNumber6">simpledom-component</a></span>&apos;</code></pre></div>
+  
+  
+  
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">WrappedComponent</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
       </tr>
     </table>
     <div data-ice="returnProperties">
