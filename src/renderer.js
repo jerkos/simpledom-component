@@ -1,6 +1,7 @@
 import { convertToNode } from './converter';
 import { flatten, dasherize, isFunction } from './util';
 import { Store } from './Store';
+import * as ReactDOM from "react-dom";
 
 
 /**
@@ -21,6 +22,14 @@ export function el(element, attrs, ...children) {
             componentClass: element,
             props
         };
+    } else if (element && element.prototype && element.prototype.__proto__.isReactComponent) {
+        return {
+            isReactComponent: true,
+            componentClass: element,
+            attrs,
+            children
+        }
+
     } else {
         if (isFunction(element)) {
             return element(attrs, ...children);
@@ -53,7 +62,8 @@ function cleanAnGetNode(node) {
  * @param {Store} store the store
  */
 export function renderToDom(node, component, store = new Store()) {
-
+    const event = new Event('beforerender');
+    window.dispatchEvent(event);
     renderComponents(node, [component], store);
 }
 

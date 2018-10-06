@@ -1,5 +1,9 @@
 
 import {dasherize} from './util';
+import React from "react";
+import ReactDOM from 'react-dom';
+import {withGracefulUnmount} from "./ReactWrapper";
+
 
 export function updateAttrs(node, element) {
     for (let key in element.attrs) {
@@ -44,6 +48,16 @@ export function convertToNode(element, store, componentList) {
         let componentInstance = new element.componentClass({...element.props}, store);
         componentList.push(componentInstance);
         return convertToNode(componentInstance.renderComponent(element.otherRef), store, componentList);
+    }
+
+    if (element.isReactComponent) {
+        const reactElem = React.createElement(
+            withGracefulUnmount(element.componentClass),
+            element.attrs, element.children
+        );
+        const node = document.createElement('div');
+        ReactDOM.render(reactElem, node);
+        return node;
     }
 
     if (!element.isElem) {
