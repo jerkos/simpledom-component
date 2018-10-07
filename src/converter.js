@@ -51,12 +51,22 @@ export function convertToNode(element, store, componentList) {
     }
 
     if (element.isReactComponent) {
-        const reactElem = React.createElement(
-            withGracefulUnmount(element.componentClass),
-            element.attrs, element.children
-        );
+        console.log(element);
+        const reactElem = React.createElement(element.componentClass, element.attrs, element.children);
         const node = document.createElement('div');
         ReactDOM.render(reactElem, node);
+        console.log(node);
+        if (element.simpleDomChildren && element.simpleDomChildren.length) {
+            element.simpleDomChildren.forEach((childElement, i) => {
+                let componentInstance = new childElement.componentClass({...element.attrs}, store);
+                componentList.push(componentInstance);
+                const childNode = convertToNode(componentInstance.renderComponent(childElement.otherRef),
+                    store, componentList);
+                const oldNode = node.querySelector('div[data-attribute="' + i + '"]');
+                oldNode.parentNode
+                    .replaceChild(childNode, node.querySelector('div[data-attribute="' + i + '"]'));
+            })
+        }
         return node;
     }
 

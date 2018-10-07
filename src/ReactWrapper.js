@@ -10,12 +10,12 @@ export function withGracefulUnmount(WrappedComponent) {
         constructor(props){
             super(props);
             this.state = { mounted: false };
+            console.log('gracefullComponent: ', this.props.children);
             this.componentGracefulUnmount = this.componentGracefulUnmount.bind(this)
         }
 
 
         componentGracefulUnmount(){
-            console.log('here');
             this.setState({mounted: false});
 
             window.removeEventListener('beforeunload', this.componentGracefulUnmount);
@@ -41,7 +41,6 @@ export function withGracefulUnmount(WrappedComponent) {
         render(){
 
             let { mounted }  = this.state;
-
             if (mounted) {
                 return React.createElement(WrappedComponent, ...this.props);
             }

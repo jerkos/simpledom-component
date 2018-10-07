@@ -49,6 +49,7 @@
 import { flatten, dasherize, isFunction } from &apos;./util&apos;;
 import { Store } from &apos;./Store&apos;;
 import * as ReactDOM from &quot;react-dom&quot;;
+import React from &quot;react&quot;;
 
 
 /**
@@ -59,6 +60,7 @@ import * as ReactDOM from &quot;react-dom&quot;;
  * @return {Object} an object representing a dom node.
  */
 export function el(element, attrs, ...children) {
+    const isReactComp = elem =&gt; elem &amp;&amp; elem.prototype &amp;&amp; elem.prototype.__proto__.isReactComponent;
     if (element &amp;&amp; element.isComponent) {
         const props = {
             ...attrs,
@@ -69,14 +71,31 @@ export function el(element, attrs, ...children) {
             componentClass: element,
             props
         };
-    } else if (element &amp;&amp; element.prototype &amp;&amp; element.prototype.__proto__.isReactComponent) {
+    } else if (isReactComp(element)) {
+        console.log(&apos;children of &apos; + element.name +&apos;: &apos;, children)
+        //const simpleDomChildren = children.filter(child =&gt; child.isComponent);
+        const allChildren = flatten(children).map(child =&gt; child.simpleDomChildren || []);
+        const simpleDomChildren = flatten(allChildren).concat(children).filter(comp =&gt; comp.isComponent);
+        let i = 0;
         return {
             isReactComponent: true,
             componentClass: element,
             attrs,
-            children
-        }
-
+            children: (flatten(children) || [])
+                .filter(child =&gt; child !== null &amp;&amp; child !== undefined)
+                .map(child =&gt; {
+                    if (child.isReactComponent) {
+                        return React.createElement(child.componentClass, child.attrs, child.children);
+                    } else if (child.isComponent) {
+                        const newElem =  React.createElement(&apos;div&apos;, {&apos;data-attribute&apos;: i}, []);
+                        ++i;
+                        return newElem;
+                    }
+                    return React.createElement(child.name, child.attrs, child.children);
+                })
+                .filter(child =&gt; child !== null &amp;&amp; child !== undefined),
+            simpleDomChildren
+        };
     } else {
         if (isFunction(element)) {
             return element(attrs, ...children);
