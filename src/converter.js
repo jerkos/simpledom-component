@@ -51,7 +51,6 @@ export function convertToNode(element, store, componentList) {
     }
 
     if (element.isReactComponent) {
-        console.log(element);
         const reactElem = React.createElement(element.componentClass, element.attrs, element.children);
         const node = document.createElement('div');
         ReactDOM.render(reactElem, node);
