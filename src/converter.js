@@ -3,6 +3,7 @@ import {dasherize} from './util';
 import React from "react";
 import ReactDOM from 'react-dom';
 import {withGracefulUnmount} from "./ReactWrapper";
+import {setSimpleDomChildren, SIMPLEDOM_CHILDREN} from "./renderer";
 
 
 export function updateAttrs(node, element) {
@@ -51,21 +52,28 @@ export function convertToNode(element, store, componentList) {
     }
 
     if (element.isReactComponent) {
+        console.log(element); // for debug purpose
         const reactElem = React.createElement(element.componentClass, element.attrs, element.children);
         const node = document.createElement('div');
         ReactDOM.render(reactElem, node);
-        console.log(node);
-        if (element.simpleDomChildren && element.simpleDomChildren.length) {
-            element.simpleDomChildren.forEach((childElement, i) => {
-                let componentInstance = new childElement.componentClass({...element.attrs}, store);
+
+        const idsToRemove = new Set();
+        Array.from(node.querySelectorAll('div[data-attribute]'))
+            .forEach(nodeElement => {
+                const currentId = +nodeElement.getAttribute('data-attribute');
+                idsToRemove.add(currentId);
+                const simpleDomChild = SIMPLEDOM_CHILDREN.find(elem => elem.id === currentId).element;
+                let componentInstance = new simpleDomChild.componentClass({...simpleDomChild.props}, store);
                 componentList.push(componentInstance);
-                const childNode = convertToNode(componentInstance.renderComponent(childElement.otherRef),
-                    store, componentList);
-                const oldNode = node.querySelector('div[data-attribute="' + i + '"]');
-                oldNode.parentNode
-                    .replaceChild(childNode, node.querySelector('div[data-attribute="' + i + '"]'));
-            })
-        }
+                const childNode = convertToNode(
+                    componentInstance.renderComponent(simpleDomChild.otherRef),
+                    store,
+                    componentList
+                );
+                nodeElement.parentNode.replaceChild(childNode, nodeElement);
+            }
+        );
+        setSimpleDomChildren(SIMPLEDOM_CHILDREN.filter(sdChild => !idsToRemove.has(sdChild.id)));
         return node;
     }
 

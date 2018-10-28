@@ -6,6 +6,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "simpledom-component~simpledom_children",
+    "variable/index.html#static-variable-SIMPLEDOM_CHILDREN",
+    "<span>SIMPLEDOM_CHILDREN</span> <span class=\"search-result-import-path\">simpledom-component</span>",
+    "variable"
+  ],
+  [
     "simpledom-component~store",
     "class/src/Store.js~Store.html",
     "<span>Store</span> <span class=\"search-result-import-path\">simpledom-component</span>",
@@ -39,6 +45,12 @@ window.esdocSearchIndex = [
     "simpledom-component~rendertostring",
     "function/index.html#static-function-renderToString",
     "<span>renderToString</span> <span class=\"search-result-import-path\">simpledom-component</span>",
+    "function"
+  ],
+  [
+    "simpledom-component~setsimpledomchildren",
+    "function/index.html#static-function-setSimpleDomChildren",
+    "<span>setSimpleDomChildren</span> <span class=\"search-result-import-path\">simpledom-component</span>",
     "function"
   ],
   [

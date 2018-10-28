@@ -4,6 +4,38 @@ import { Store } from './Store';
 import * as ReactDOM from "react-dom";
 import React from "react";
 
+let i = 0;
+export let SIMPLEDOM_CHILDREN = [];
+export function setSimpleDomChildren(newChildren) {
+    SIMPLEDOM_CHILDREN = newChildren;
+}
+
+const isReactComp = elem => elem && elem.prototype && elem.prototype.__proto__.isReactComponent;
+
+function buildObject(element) {
+    if (element.isReactComponent) {
+        return React.createElement(element.componentClass, element.attrs, element.children);
+    } else if (element.isComponent) {
+        const newElem = React.createElement(
+            'div',
+            {'data-attribute': i},
+            []
+        );
+        SIMPLEDOM_CHILDREN.push({id: i, element});
+        ++i;
+        return newElem;
+    } else if (typeof element === 'string') {
+        // ugly thing to return value
+        return element;
+    }
+    return React.createElement(
+        element.name,
+        element.attrs,
+        (element.children || [])
+            .filter(c => c !== null && c !== undefined)
+            .map(c => buildObject(c))
+    );
+}
 
 /**
  * JSX factory function to create an object representing a dom node. Designed to be used with a JSX transpiler.
@@ -13,7 +45,6 @@ import React from "react";
  * @return {Object} an object representing a dom node.
  */
 export function el(element, attrs, ...children) {
-    const isReactComp = elem => elem && elem.prototype && elem.prototype.__proto__.isReactComponent;
     if (element && element.isComponent) {
         const props = {
             ...attrs,
@@ -25,29 +56,26 @@ export function el(element, attrs, ...children) {
             props
         };
     } else if (isReactComp(element)) {
-        console.log('children of ' + element.name +': ', children)
-        //const simpleDomChildren = children.filter(child => child.isComponent);
-        const allChildren = flatten(children).map(child => child.simpleDomChildren || []);
-        const simpleDomChildren = flatten(allChildren).concat(children).filter(comp => comp.isComponent);
-        let i = 0;
+        console.log('children of ' + element.name +': ', children); // debug purpose
+        const attributes = {};
+
+        Object.keys(attrs).forEach(keyAttr => {
+            const param = attrs[keyAttr];
+            if (param.isComponent || param.isElem || isReactComp(param)) {
+                attributes[keyAttr] = buildObject(param);
+                return;
+            }
+            attributes[keyAttr] = param;
+        });
         return {
             isReactComponent: true,
             componentClass: element,
-            attrs,
+            attrs: attributes,
             children: (flatten(children) || [])
                 .filter(child => child !== null && child !== undefined)
-                .map(child => {
-                    if (child.isReactComponent) {
-                        return React.createElement(child.componentClass, child.attrs, child.children);
-                    } else if (child.isComponent) {
-                        const newElem =  React.createElement('div', {'data-attribute': i}, []);
-                        ++i;
-                        return newElem;
-                    }
-                    return React.createElement(child.name, child.attrs, child.children);
-                })
+                .map(child => buildObject(child))
                 .filter(child => child !== null && child !== undefined),
-            simpleDomChildren
+            //simpleDomChildren
         };
     } else {
         if (isFunction(element)) {
