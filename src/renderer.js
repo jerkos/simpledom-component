@@ -141,7 +141,7 @@ function renderComponents(node, components, store = new Store()) {
             }
             for (let index = store.componentsSubscribes.length - 1; index >= 0; index--) {
                 const component = store.componentsSubscribes[index];
-                if (component.component.node && !realNode.contains(component.component.node)) {
+                if (component.component.node && !realNode.body.contains(component.component.node)) {
                     component.subscribes.forEach(({event, id}) => store.unsubscribeByEventAndId(event, id));
                     component.component.node = undefined;
                     store.componentsSubscribes.splice(index, 1);

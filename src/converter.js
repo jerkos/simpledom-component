@@ -74,7 +74,7 @@ export function convertToNode(element, store, componentList) {
             }
         );
         setSimpleDomChildren(SIMPLEDOM_CHILDREN.filter(sdChild => !idsToRemove.has(sdChild.id)));
-        return node;
+        return node.firstChild;
     }
 
     if (!element.isElem) {

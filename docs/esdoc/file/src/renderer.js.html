@@ -61,7 +61,7 @@ export function setSimpleDomChildren(newChildren) {
 
 const isReactComp = elem =&gt; elem &amp;&amp; elem.prototype &amp;&amp; elem.prototype.__proto__.isReactComponent;
 
-function buildObject(element) { //, simpleDomChildren = []) { //, counter = 0) {
+function buildObject(element) {
     if (element.isReactComponent) {
         return React.createElement(element.componentClass, element.attrs, element.children);
     } else if (element.isComponent) {
@@ -82,7 +82,7 @@ function buildObject(element) { //, simpleDomChildren = []) { //, counter = 0) {
         element.attrs,
         (element.children || [])
             .filter(c =&gt; c !== null &amp;&amp; c !== undefined)
-            .map(c =&gt; buildObject(c)) //, simpleDomChildren)) //, i))
+            .map(c =&gt; buildObject(c))
     );
 }
 
@@ -105,34 +105,24 @@ export function el(element, attrs, ...children) {
             props
         };
     } else if (isReactComp(element)) {
-        console.log(&apos;children of &apos; + element.name +&apos;: &apos;, children)
-        /*
-        const allChildren = flatten(children).map(child =&gt; child.simpleDomChildren || []);
-
-        const simpleDomChildren = flatten(allChildren)
-            .concat(children)
-            .filter(comp =&gt; comp.isComponent);
-        */
-        //let i = 0;
+        console.log(&apos;children of &apos; + element.name +&apos;: &apos;, children); // debug purpose
         const attributes = {};
 
         Object.keys(attrs).forEach(keyAttr =&gt; {
             const param = attrs[keyAttr];
-            console.log(param);
             if (param.isComponent || param.isElem || isReactComp(param)) {
-                attributes[keyAttr] = buildObject(param) //, simpleDomChildren); //, i);
+                attributes[keyAttr] = buildObject(param);
                 return;
             }
             attributes[keyAttr] = param;
         });
-       // console.log(&apos;simpleDomChildren of react Comp: &apos;, simpleDomChildren)
         return {
             isReactComponent: true,
             componentClass: element,
             attrs: attributes,
             children: (flatten(children) || [])
                 .filter(child =&gt; child !== null &amp;&amp; child !== undefined)
-                .map(child =&gt; buildObject(child)) //, simpleDomChildren)) //, i))
+                .map(child =&gt; buildObject(child))
                 .filter(child =&gt; child !== null &amp;&amp; child !== undefined),
             //simpleDomChildren
         };

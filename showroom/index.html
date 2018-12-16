@@ -326,7 +326,7 @@
                     const editor = ace.edit(sample.id + '-code-content-editor');
                     editor.setTheme("ace/theme/monokai");
                     editor.getSession().setMode({path: "ace/mode/javascript", jsx: true});
-                    editor.renderer.setShowGutter(false);
+                    /*editor.renderer.setShowGutter(false);
 
 
                     editor.getSession().on('change', function(e) {
@@ -340,7 +340,7 @@
                             );
                             console.error(error);
                         }
-                    });
+                    });*/
                 });
                 samplesResult.map(sample => sample.es5Code).forEach(eval);
             })
